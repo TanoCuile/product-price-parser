@@ -9,20 +9,6 @@ const helpers = require("./helpers");
 const { getProducts } = require("./getProducts");
 const products = getProducts();
 
-// let index = 0;
-// Варто використовувати, коли дуже складна умова закінчення
-// while (index < products.length) {
-//     console.log(`#${index}`, products[index].name, products[index].latestPrice);
-//     index += 1;
-// }
-
-// Зручніший варіант, для роботи з масивами
-// for (let i = 0; i < products.length; ++i)
-//   console.log(`#${i}`, products[i].name, products[i].latestPrice);
-
-// for (let i in products)
-//   console.log(`#${i}`, products[i].name, products[i].latestPrice);
-
 function logProductsWithDiscount() {
   for (let p of products) {
     p.flag = helpers.getProductFlag(p.prices[p.prices.length - 1], p.prices[p.prices.length - 2]);
@@ -45,16 +31,3 @@ function logProductsWithDiscount() {
   
   console.log('Продукти скидкою', productsForNotification.length);
 }
-
-// const product3 = "Xiaomi Redmi HDD,PNG";
-// const product3price1 = 34048.39;
-// const product3price2 = 13456.06;
-// const product3price3 = 15800.45;
-// const product3price4 = 17712.19;
-// const product3price5 = 8480.41;
-// const maker3 = "Xiaomi";
-// const model3 = "Redmi";
-
-// Потрібно дізнатись, чи впала ціна?
-// Потрібно дізнатись, чи великий стрибок? Якщо великий спад - рекомендуюмо купувати.
-// Важливо: потрібно швидко додати перевірку для нового товару!
