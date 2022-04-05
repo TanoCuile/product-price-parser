@@ -1,0 +1,28 @@
+{
+  "name": "price-parcer",
+  "version": "1.0.0",
+  "description": "Parser for prices",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.2"
+  },
+  "devDependencies": {
+    "seedrandom": "^3.0.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanoCuile/price-comparator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TanoCuile/price-comparator/issues"
+  },
+  "homepage": "https://github.com/TanoCuile/price-comparator#readme"
+}
