@@ -11,9 +11,12 @@ const products = getProducts();
 
 function logProductsWithDiscount() {
   for (let p of products) {
-    p.flag = helpers.getProductFlag(p.prices[p.prices.length - 1], p.prices[p.prices.length - 2]);
+    p.flag = helpers.getProductFlag(
+      p.prices[p.prices.length - 2],
+      p.prices[p.prices.length - 1]
+    );
   }
-  
+
   const productsForNotification = [];
   for (let p of products) {
     switch (p.flag) {
@@ -28,6 +31,6 @@ function logProductsWithDiscount() {
         console.log(p.product, "proceed");
     }
   }
-  
-  console.log('Продукти скидкою', productsForNotification.length);
+
+  console.log("Продукти скидкою", productsForNotification.length);
 }
