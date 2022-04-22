@@ -29,7 +29,7 @@ loadPageData()
     console.error(error);
   });
 
-const products = require("./products.json");
+const products = require("../products.json");
 
 // Promise.all(products.map((p) => loadPageData(p))).then(() => ...);
 

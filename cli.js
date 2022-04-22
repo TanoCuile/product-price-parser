@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
-const helpers = require("./helpers");
-const { loadProductsForPage } = require("./loadPageProducts");
+const { getProductFlag } = require("./helpers");
+const { loadProductsForPage } = require("./services/loadPageProducts");
 const { getProducts } = require("./repository/product.repository");
 
 function getLastPrice(intrestingProduct) {
@@ -8,7 +8,7 @@ function getLastPrice(intrestingProduct) {
 }
 
 function getFlagRepresentation(intrestingProduct) {
-  return helpers.getProductFlag(
+  return getProductFlag(
     intrestingProduct.prices[intrestingProduct.prices.length - 2],
     intrestingProduct.prices[intrestingProduct.prices.length - 1]
   );
