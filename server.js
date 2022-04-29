@@ -1,4 +1,5 @@
-const http = require("http");
+const express = require("express");
+const path = require("path");
 
 function getProductDataByURL(url) {
   // Do work!
@@ -7,70 +8,45 @@ function getProductDataByURL(url) {
 
 let latestVisitorId = 1;
 
-/**
- * @type {import('http').RequestListener}
- */
-const requestListener = (req, res) => {
-  // req - ReadableStream
-  // res - WritableStream
-  console.log(req.method, req.url);
+const app = express();
+// Automatically convert 'body'(if that's possible) to JSON
+app.use(express.json());
 
+app.set("views", path.join(process.cwd(), "views"));
+app.set("view engine", "ejs");
+
+app.use("", (req, res, next) => {
+  console.log("First middleware");
   let cookies = getRequestCookies(req);
+  req.visitor_id = cookies.visitor_id;
 
-  res.setHeader("Content-Type", "text/html");
+  next();
+});
 
-  setUpVisitorCookie(cookies, res);
+app.post("/products", (req, res) => {
+  let data = req.body;
 
-  if (req.method.toLowerCase() === "post") {
-    if (req.url === "/product") {
-      let data = [];
+  console.log("BODY > ", data);
 
-      req.on("data", getChunkListener(data));
-      req.on("end", () => {
-        try {
-          const {
-            data: { url },
-          } = JSON.parse(data.join("")) || { data: {} };
-          if (url) {
-            getProductDataByURL(url);
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      });
-    }
-    // else if (req.url === "/site") {
-    // else if (req.url === "/user") {
-    // else if (req.url === "/category") {
-    // ...
-
-    // Домашнє завдання
-    // При обробці POST /products - ви вивели HTML повідомлення про успішне додавання продукту.
+  res.render("home", { visitor_id: req.visitor_id });
+});
+// app.put()
+// app.options()
+// app.delete()
+app.get(
+  "",
+  (req, res, next) => {
+    console.log("Small middleware");
+    next();
+  },
+  (req, res) => {
+    res.render("home", { visitor_id: req.visitor_id });
   }
-
-  // if (req.url === "/") {
-  res.write(`
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello visitor ${cookies.visitor_id || "newcomer"} world!</title>
-    </head>
-    <body>Server response</body>
-</html>
-    `);
-
-  // else if (req.url === "/user") {
-  // else if (req.url === "/category") {
-  // ...
-
-  res.end();
-};
-
-const server = new http.Server(requestListener);
+);
 
 // code: 'EADDRINUSE' - Порт уже використовується, виберіть інший, або зупиніть інший процес
 
-server.listen(8080, "localhost", () => {
+app.listen(8080, "localhost", () => {
   console.log("Server started");
 });
 
